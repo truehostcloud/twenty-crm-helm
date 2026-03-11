@@ -26,7 +26,7 @@ jobs:
         uses: azure/setup-helm@v4
 
       - name: Install helm-unittest plugin
-        run: helm plugin install https://github.com/quintush/helm-unittest --version v1.0.3
+        run: helm plugin install https://github.com/quintush/helm-unittest --version v1.0.3 --verify=false
 
       - name: Lint chart
         run: helm lint charts/twenty
