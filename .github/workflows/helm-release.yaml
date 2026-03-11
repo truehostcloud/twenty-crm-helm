@@ -1,0 +1,45 @@
+name: Helm Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - charts/twenty/**
+      - .github/workflows/helm-release.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  lint-test-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install helm-unittest plugin
+        run: helm plugin install https://github.com/quintush/helm-unittest --version v1.0.3
+
+      - name: Lint chart
+        run: helm lint charts/twenty
+
+      - name: Render chart
+        run: helm template my-twenty charts/twenty > /dev/null
+
+      - name: Run unit tests
+        run: helm unittest charts/twenty
+
+      - name: Publish chart release
+        uses: helm/chart-releaser-action@v1.7.0
+        with:
+          charts_dir: charts
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}

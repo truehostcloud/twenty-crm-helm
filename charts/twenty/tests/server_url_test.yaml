@@ -1,0 +1,33 @@
+suite: server url
+templates:
+  - templates/deployment-server.yaml
+release:
+  name: my-twenty
+  namespace: default
+tests:
+  - it: derives from ingress with paths
+    set:
+      server.ingress.enabled: true
+      server.ingress.hosts:
+        - host: crm.example.com
+          paths:
+            - path: /
+              pathType: Prefix
+      server.ingress.tls:
+        - secretName: example-tls
+          hosts:
+            - crm.example.com
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: "https://crm.example.com:443"
+
+  - it: falls back to service when ingress disabled
+    set:
+      server.ingress.enabled: false
+      server.service.port: 3000
+      server.env.SERVER_URL: ""
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].env[0].value
+          pattern: ^http://my-twenty-twenty-server\.default\.svc\.cluster\.local:3000$
