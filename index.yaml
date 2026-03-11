@@ -3,6 +3,18 @@ entries:
   twenty:
   - apiVersion: v2
     appVersion: v1.14.0
+    created: "2026-03-11T13:14:06.922477781Z"
+    description: A Helm chart to deploy Twenty CRM (server + worker) with optional
+      PostgreSQL and Redis dependencies.
+    digest: c345a4e5ea39274116f00a1230c1e7c0c5ec6b0b669c73b379963ea5df1db7c8
+    icon: https://raw.githubusercontent.com/twentyhq/twenty/2f25922f4cd5bd61e1427c57c4f8ea224e1d552c/packages/twenty-website/public/images/core/logo.svg
+    name: twenty
+    type: application
+    urls:
+    - https://github.com/truehostcloud/twenty-crm-helm/releases/download/twenty-0.1.2/twenty-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v1.14.0
     created: "2026-03-11T13:04:17.680726031Z"
     description: A Helm chart to deploy Twenty CRM (server + worker) with optional
       PostgreSQL and Redis dependencies.
@@ -25,4 +37,4 @@ entries:
     urls:
     - https://github.com/truehostcloud/twenty-crm-helm/releases/download/twenty-0.1.0/twenty-0.1.0.tgz
     version: 0.1.0
-generated: "2026-03-11T13:04:17.680738224Z"
+generated: "2026-03-11T13:14:06.922489643Z"
