@@ -66,6 +66,22 @@ See `values.yaml` for the complete list. The main prerequisite toggles are:
 - The chart does not create separate DB setup or migration jobs
 - Access token is auto-generated if not provided and re-used on upgrade when the secret already exists
 - TLS is enabled by default through cert-manager annotations when `server.ingress.acme=true`
+- Multi-workspace mode is available through server env settings: set `server.env.IS_MULTIWORKSPACE_ENABLED=true` and keep `server.env.DEFAULT_SUBDOMAIN=app` unless you want a different login subdomain
+
+## Multi-Workspace Mode
+
+Twenty's upstream docs describe multi-workspace mode as an environment-only toggle. When enabled, the instance supports multiple workspaces on the same deployment and workspace-specific subdomains become available.
+
+Example values:
+
+```yaml
+server:
+  env:
+    IS_MULTIWORKSPACE_ENABLED: "true"
+    DEFAULT_SUBDOMAIN: "app"
+```
+
+You will also need wildcard or subdomain DNS that routes the chosen default subdomain and any workspace subdomains to the chart ingress.
 
 ## Testing
 

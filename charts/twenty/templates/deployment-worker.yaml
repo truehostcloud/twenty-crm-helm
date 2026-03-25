@@ -71,6 +71,10 @@ spec:
               value: {{ include "twenty.redisUrl" . | quote }}
             - name: STORAGE_TYPE
               value: {{ include "twenty.storageType" . | quote }}
+            - name: IS_MULTIWORKSPACE_ENABLED
+              value: {{ .Values.server.env.IS_MULTIWORKSPACE_ENABLED | quote }}
+            - name: DEFAULT_SUBDOMAIN
+              value: {{ .Values.server.env.DEFAULT_SUBDOMAIN | quote }}
             - name: APP_SECRET
               valueFrom:
                 secretKeyRef:

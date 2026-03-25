@@ -164,6 +164,12 @@ spec:
               value: {{ .Values.server.env.ACCESS_TOKEN_EXPIRES_IN | quote }}
             - name: LOGIN_TOKEN_EXPIRES_IN
               value: {{ .Values.server.env.LOGIN_TOKEN_EXPIRES_IN | quote }}
+            - name: IS_MULTIWORKSPACE_ENABLED
+              value: {{ .Values.server.env.IS_MULTIWORKSPACE_ENABLED | quote }}
+            - name: DEFAULT_SUBDOMAIN
+              value: {{ .Values.server.env.DEFAULT_SUBDOMAIN | quote }}
+            - name: IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS
+              value: {{ .Values.server.env.IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS | quote }}
             - name: APP_SECRET
               valueFrom:
                 secretKeyRef:

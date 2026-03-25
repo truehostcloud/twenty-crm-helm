@@ -1,0 +1,63 @@
+suite: multi workspace env
+templates:
+  - templates/deployment-server.yaml
+  - templates/deployment-worker.yaml
+release:
+  name: my-twenty
+  namespace: default
+tests:
+  - it: renders multi-workspace defaults on the server
+    template: templates/deployment-server.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: IS_MULTIWORKSPACE_ENABLED
+            value: "false"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DEFAULT_SUBDOMAIN
+            value: app
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS
+            value: "true"
+
+  - it: renders multi-workspace defaults on the worker
+    template: templates/deployment-worker.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: IS_MULTIWORKSPACE_ENABLED
+            value: "false"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DEFAULT_SUBDOMAIN
+            value: app
+
+  - it: allows overriding multi-workspace env values
+    template: templates/deployment-server.yaml
+    set:
+      server.env.IS_MULTIWORKSPACE_ENABLED: "true"
+      server.env.DEFAULT_SUBDOMAIN: custom
+      server.env.IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS: "false"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: IS_MULTIWORKSPACE_ENABLED
+            value: "true"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DEFAULT_SUBDOMAIN
+            value: custom
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS
+            value: "false"

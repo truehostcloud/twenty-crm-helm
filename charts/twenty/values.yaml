@@ -52,6 +52,9 @@ server:
     SIGN_IN_PREFILLED: "false"
     ACCESS_TOKEN_EXPIRES_IN: "7d"
     LOGIN_TOKEN_EXPIRES_IN: "1h"
+    IS_MULTIWORKSPACE_ENABLED: "false"
+    DEFAULT_SUBDOMAIN: "app"
+    IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS: "true"
 
   service:
     type: ClusterIP
