@@ -49,6 +49,8 @@
             "STORAGE_TYPE": { "type": "string" },
             "ACCESS_TOKEN_EXPIRES_IN": { "type": "string" },
             "LOGIN_TOKEN_EXPIRES_IN": { "type": "string" },
+            "API_RATE_LIMITING_SHORT_LIMIT": { "type": "integer" },
+            "API_RATE_LIMITING_SHORT_TTL_IN_MS": { "type": "integer" },
             "IS_MULTIWORKSPACE_ENABLED": { "type": "string" },
             "DEFAULT_SUBDOMAIN": { "type": "string" },
             "IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS": { "type": "string" },

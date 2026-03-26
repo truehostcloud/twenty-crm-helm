@@ -24,6 +24,16 @@ tests:
           content:
             name: IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS
             value: "true"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: API_RATE_LIMITING_SHORT_LIMIT
+            value: "100"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: API_RATE_LIMITING_SHORT_TTL_IN_MS
+            value: "1000"
 
   - it: renders multi-workspace defaults on the worker
     template: templates/deployment-worker.yaml
@@ -45,6 +55,8 @@ tests:
       server.env.IS_MULTIWORKSPACE_ENABLED: "true"
       server.env.DEFAULT_SUBDOMAIN: custom
       server.env.IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS: "false"
+      server.env.API_RATE_LIMITING_SHORT_LIMIT: 250
+      server.env.API_RATE_LIMITING_SHORT_TTL_IN_MS: 5000
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -61,3 +73,13 @@ tests:
           content:
             name: IS_WORKSPACE_CREATION_LIMITED_TO_SERVER_ADMINS
             value: "false"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: API_RATE_LIMITING_SHORT_LIMIT
+            value: "250"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: API_RATE_LIMITING_SHORT_TTL_IN_MS
+            value: "5000"

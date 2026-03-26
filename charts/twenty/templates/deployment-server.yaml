@@ -164,6 +164,10 @@ spec:
               value: {{ .Values.server.env.ACCESS_TOKEN_EXPIRES_IN | quote }}
             - name: LOGIN_TOKEN_EXPIRES_IN
               value: {{ .Values.server.env.LOGIN_TOKEN_EXPIRES_IN | quote }}
+            - name: API_RATE_LIMITING_SHORT_LIMIT
+              value: {{ .Values.server.env.API_RATE_LIMITING_SHORT_LIMIT | quote }}
+            - name: API_RATE_LIMITING_SHORT_TTL_IN_MS
+              value: {{ .Values.server.env.API_RATE_LIMITING_SHORT_TTL_IN_MS | quote }}
             - name: IS_MULTIWORKSPACE_ENABLED
               value: {{ .Values.server.env.IS_MULTIWORKSPACE_ENABLED | quote }}
             - name: DEFAULT_SUBDOMAIN
