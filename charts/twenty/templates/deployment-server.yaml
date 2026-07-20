@@ -131,6 +131,8 @@ spec:
                   name: {{ include "twenty.dbUrl.secretName" . }}
                   key: url
             {{- end }}
+            - name: REDIS_URL
+              value: {{ include "twenty.redisUrl" . | quote }}
       containers:
         - name: server
           {{- $img := include "twenty.server.image" . }}
