@@ -133,6 +133,11 @@ spec:
             {{- end }}
             - name: REDIS_URL
               value: {{ include "twenty.redisUrl" . | quote }}
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "twenty.secret.tokens.name" . }}
+                  key: accessToken
       containers:
         - name: server
           {{- $img := include "twenty.server.image" . }}
