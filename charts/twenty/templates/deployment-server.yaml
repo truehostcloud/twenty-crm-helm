@@ -106,6 +106,31 @@ spec:
               psql -h {{ include "twenty.fullname" . }}-db -p 5432 -U postgres -d "${DBNAME}" -v app_user="${APP_USER}" -c 'ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO :"app_user";'
               echo "Database ${DBNAME} is ready."
         {{- end }}
+        - name: run-migrations
+          {{- $img := include "twenty.server.image" . }}
+          image: {{ include "twenty.image.repository" $img }}:{{ include "twenty.image.tag" $img }}
+          imagePullPolicy: {{ include "twenty.image.pullPolicy" $img }}
+          command:
+            - sh
+            - -c
+            - >-
+              yarn database:init:prod
+          env:
+            {{- if eq (include "twenty.db.useExternalSecret" .) "true" }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "twenty.dbPassword.secretName" . }}
+                  key: {{ include "twenty.dbPassword.secretKey" . }}
+            - name: PG_DATABASE_URL
+              value: {{ include "twenty.dbUrl.template" . | quote }}
+            {{- else }}
+            - name: PG_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "twenty.dbUrl.secretName" . }}
+                  key: url
+            {{- end }}
       containers:
         - name: server
           {{- $img := include "twenty.server.image" . }}
