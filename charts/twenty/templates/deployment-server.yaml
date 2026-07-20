@@ -121,6 +121,8 @@ spec:
               yarn command:prod cache:flush
               echo "Running workspace upgrades..."
               yarn command:prod upgrade
+              echo "Running jobTitle backfill for workspaceMember..."
+              yarn command:prod upgrade:2-17:add-workspace-member-job-title-field || true
               echo "Flushing cache after upgrade..."
               yarn command:prod cache:flush
               echo "Registering background jobs..."

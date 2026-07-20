@@ -107,6 +107,9 @@ tests:
           pattern: command:prod upgrade
       - matchRegex:
           path: spec.template.spec.initContainers[?(@.name=="run-migrations")].command[2]
+          pattern: add-workspace-member-job-title-field
+      - matchRegex:
+          path: spec.template.spec.initContainers[?(@.name=="run-migrations")].command[2]
           pattern: cron:register:all
       - matchRegex:
           path: spec.template.spec.containers[?(@.name=="server")].env[?(@.name=="DISABLE_DB_MIGRATIONS")].value
