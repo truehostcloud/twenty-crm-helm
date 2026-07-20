@@ -113,8 +113,19 @@ spec:
           command:
             - sh
             - -c
-            - >-
+            - |
+              set -e
+              echo "Running database setup and migrations..."
               yarn database:init:prod
+              echo "Flushing cache before upgrade..."
+              yarn command:prod cache:flush
+              echo "Running workspace upgrades..."
+              yarn command:prod upgrade
+              echo "Flushing cache after upgrade..."
+              yarn command:prod cache:flush
+              echo "Registering background jobs..."
+              yarn command:prod cron:register:all
+              echo "Database setup complete."
           env:
             {{- if eq (include "twenty.db.useExternalSecret" .) "true" }}
             - name: DB_PASSWORD
@@ -186,6 +197,10 @@ spec:
                 secretKeyRef:
                   name: {{ include "twenty.secret.tokens.name" . }}
                   key: accessToken
+            - name: DISABLE_DB_MIGRATIONS
+              value: "true"
+            - name: DISABLE_CRON_JOBS_REGISTRATION
+              value: "true"
             {{- $storageEnv := (include "twenty.storageEnv" .) }}
             {{- if $storageEnv }}
             {{ $storageEnv | nindent 12 }}
