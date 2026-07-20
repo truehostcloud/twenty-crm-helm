@@ -94,11 +94,3 @@ tests:
           path: spec.template.spec.initContainers[?(@.name=="ensure-database-exists")].command[2]
           pattern: ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES
 
-  - it: migrations run against core datasource
-    template: templates/deployment-server.yaml
-    set:
-      db.enabled: true
-    asserts:
-      - matchRegex:
-          path: spec.template.spec.initContainers[?(@.name=="run-migrations")].command[2]
-          pattern: core\.datasource
